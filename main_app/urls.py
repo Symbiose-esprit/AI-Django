@@ -1,7 +1,7 @@
 from django.urls import include, path, re_path
 
 from main_app.models import diseaseinfo
-from . import views
+from . import views 
 from rest_framework import routers
 
 urlpatterns = [

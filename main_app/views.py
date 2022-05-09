@@ -134,136 +134,139 @@ def checkdisease(request):
 
       #   else:
 
-            psymptoms = []
-            psymptoms = request.POST.getlist("symptoms[]")
+        psymptoms = []
+        print("this is the request ")
+        print(request.data)
+        psymptoms = request.data.get("symptoms[]")
 
-            print(psymptoms)
+        print(psymptoms)
 
-            """      #main code start from here...
+        """      #main code start from here...
         """
 
-            testingsymptoms = []
-            # append zero in all coloumn fields...
-            for x in range(0, len(symptomslist)):
-                testingsymptoms.append(0)
+        testingsymptoms = []
+        # append zero in all coloumn fields...
+        for x in range(0, len(symptomslist)):
+            testingsymptoms.append(0)
 
-            # update 1 where symptoms gets matched...
-            for k in range(0, len(symptomslist)):
+        # update 1 where symptoms gets matched...
+        for k in range(0, len(symptomslist)):
 
-                for z in psymptoms:
-                    if (z == symptomslist[k]):
-                        testingsymptoms[k] = 1
+            for z in psymptoms:
+                if (z == symptomslist[k]):
+                    testingsymptoms[k] = 1
 
-            inputtest = [testingsymptoms]
+        inputtest = [testingsymptoms]
 
-            print(inputtest)
+        print(inputtest)
 
-            predicted = model.predict(inputtest)
-            print("predicted disease is : ")
-            print(predicted)
+        predicted = model.predict(inputtest)
+        print("predicted disease is : ")
+        print(predicted)
 
-            y_pred_2 = model.predict_proba(inputtest)
-            confidencescore = y_pred_2.max() * 100
-            print(" confidence score of : = {0} ".format(confidencescore))
+        y_pred_2 = model.predict_proba(inputtest)
+        confidencescore = y_pred_2.max() * 100
+        print(" confidence score of : = {0} ".format(confidencescore))
 
-            confidencescore = format(confidencescore, '.0f')
-            predicted_disease = predicted[0]
+        confidencescore = format(confidencescore, '.0f')
+        predicted_disease = predicted[0]
 
-            # consult_doctor codes----------
+        # consult_doctor codes----------
 
-            #   doctor_specialization = ["Rheumatologist","Cardiologist","ENT specialist","Orthopedist","Neurologist",
-            #                             "Allergist/Immunologist","Urologist","Dermatologist","Gastroenterologist"]
+        #   doctor_specialization = ["Rheumatologist","Cardiologist","ENT specialist","Orthopedist","Neurologist",
+        #                             "Allergist/Immunologist","Urologist","Dermatologist","Gastroenterologist"]
 
-            Rheumatologist = ['Osteoarthristis', 'Arthritis']
+        Rheumatologist = ['Osteoarthristis', 'Arthritis']
 
-            Cardiologist = ['Heart attack',
-                            'Bronchial Asthma', 'Hypertension ']
+        Cardiologist = ['Heart attack',
+                        'Bronchial Asthma', 'Hypertension ']
 
-            ENT_specialist = [
-                '(vertigo) Paroymsal  Positional Vertigo', 'Hypothyroidism']
+        ENT_specialist = [
+            '(vertigo) Paroymsal  Positional Vertigo', 'Hypothyroidism']
 
-            Orthopedist = []
+        Orthopedist = []
 
-            Neurologist = [
-                'Varicose veins', 'Paralysis (brain hemorrhage)', 'Migraine', 'Cervical spondylosis']
+        Neurologist = [
+            'Varicose veins', 'Paralysis (brain hemorrhage)', 'Migraine', 'Cervical spondylosis']
 
-            Allergist_Immunologist = ['Allergy', 'Pneumonia',
-                                      'AIDS', 'Common Cold', 'Tuberculosis', 'Malaria', 'Dengue', 'Typhoid']
+        Allergist_Immunologist = ['Allergy', 'Pneumonia',
+                                  'AIDS', 'Common Cold', 'Tuberculosis', 'Malaria', 'Dengue', 'Typhoid']
 
-            Urologist = ['Urinary tract infection',
-                         'Dimorphic hemmorhoids(piles)']
+        Urologist = ['Urinary tract infection',
+                     'Dimorphic hemmorhoids(piles)']
 
-            Dermatologist = ['Acne', 'Chicken pox',
-                             'Fungal infection', 'Psoriasis', 'Impetigo']
+        Dermatologist = ['Acne', 'Chicken pox',
+                         'Fungal infection', 'Psoriasis', 'Impetigo']
 
-            Gastroenterologist = ['Peptic ulcer diseae', 'GERD', 'Chronic cholestasis', 'Drug Reaction', 'Gastroenteritis', 'Hepatitis E',
-                                  'Alcoholic hepatitis', 'Jaundice', 'hepatitis A',
-                                  'Hepatitis B', 'Hepatitis C', 'Hepatitis D', 'Diabetes ', 'Hypoglycemia']
+        Gastroenterologist = ['Peptic ulcer diseae', 'GERD', 'Chronic cholestasis', 'Drug Reaction', 'Gastroenteritis', 'Hepatitis E',
+                              'Alcoholic hepatitis', 'Jaundice', 'hepatitis A',
+                              'Hepatitis B', 'Hepatitis C', 'Hepatitis D', 'Diabetes ', 'Hypoglycemia']
 
-            if predicted_disease in Rheumatologist:
-                consultdoctor = "Rheumatologist"
+        if predicted_disease in Rheumatologist:
+            consultdoctor = "Rheumatologist"
 
-            if predicted_disease in Cardiologist:
-                consultdoctor = "Cardiologist"
+        if predicted_disease in Cardiologist:
+            consultdoctor = "Cardiologist"
 
-            elif predicted_disease in ENT_specialist:
-                consultdoctor = "ENT specialist"
+        elif predicted_disease in ENT_specialist:
+            consultdoctor = "ENT specialist"
 
-            elif predicted_disease in Orthopedist:
-                consultdoctor = "Orthopedist"
+        elif predicted_disease in Orthopedist:
+            consultdoctor = "Orthopedist"
 
-            elif predicted_disease in Neurologist:
-                consultdoctor = "Neurologist"
+        elif predicted_disease in Neurologist:
+            consultdoctor = "Neurologist"
 
-            elif predicted_disease in Allergist_Immunologist:
-                consultdoctor = "Allergist/Immunologist"
+        elif predicted_disease in Allergist_Immunologist:
+            consultdoctor = "Allergist/Immunologist"
 
-            elif predicted_disease in Urologist:
-                consultdoctor = "Urologist"
+        elif predicted_disease in Urologist:
+            consultdoctor = "Urologist"
 
-            elif predicted_disease in Dermatologist:
-                consultdoctor = "Dermatologist"
+        elif predicted_disease in Dermatologist:
+            consultdoctor = "Dermatologist"
 
-            elif predicted_disease in Gastroenterologist:
-                consultdoctor = "Gastroenterologist"
+        elif predicted_disease in Gastroenterologist:
+            consultdoctor = "Gastroenterologist"
 
-            else:
-                consultdoctor = "other"
+        else:
+            consultdoctor = "other"
 
-            request.session['doctortype'] = consultdoctor
+        request.session['doctortype'] = consultdoctor
 
-            # patientusername = request.session['patientusername']
-            # puser = User.objects.get(username=patientusername)
+        # patientusername = request.session['patientusername']
+        # puser = User.objects.get(username=patientusername)
 
-            # saving to database.....................
+        # saving to database.....................
 
-            # patient = puser.patient
-            diseasename = predicted_disease
-            # no_of_symp = inputno
-            symptomsname = psymptoms
-            confidence = confidencescore
+        # patient = puser.patient
+        diseasename = predicted_disease
+        # no_of_symp = inputno
+        symptomsname = psymptoms
+        confidence = confidencescore
 
-            # diseaseinfo_new = diseaseinfo(patient=patient, diseasename=diseasename, no_of_symp=1,
-            #                               symptomsname=symptomsname, confidence=confidence, consultdoctor=consultdoctor)
-            # diseaseinfo_new.save()
-            data = {
-                "diseasename" : diseasename,
-                "confidence" : confidence,
-            }
-            serializer = diseaseinfoSerializer(data=data)
+        # diseaseinfo_new = diseaseinfo(patient=patient, diseasename=diseasename, no_of_symp=1,
+        #                               symptomsname=symptomsname, confidence=confidence, consultdoctor=consultdoctor)
+        # diseaseinfo_new.save()
+        data = {
+            # "symptomsname" : symptomsname,
+            "diseasename": diseasename,
+            "confidence": confidence,
+        }
+        serializer = diseaseinfoSerializer(data=data)
 
-            # request.session['diseaseinfo_id'] = diseaseinfo_new.id
+        # request.session['diseaseinfo_id'] = diseaseinfo_new.id
 
-            print("disease record saved sucessfully.............................")
-            # print(serializer.initial_data)
+        print("disease record saved sucessfully.............................")
+        # print(serializer.initial_data)
         #   return JsonResponse({'predicteddisease': predicted_disease ,'confidencescore':confidencescore , "consultdoctor": consultdoctor})
 
-            if serializer.is_valid():
-               #  serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
+        if serializer.is_valid():
+           #  serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
-            print(serializer.errors)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         # return Response(serializer.data, status=status.HTTP_200_OK)
 
 

@@ -5,4 +5,4 @@ from .models import diseaseinfo
 class diseaseinfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = diseaseinfo
-        fields = ["diseasename", "confidence"]
+        fields = [ "diseasename", "confidence"]
